@@ -12,7 +12,9 @@ public class Product extends Model {
     
         // Properties
         @Id
-        private Long id;
+        public Long id;
+        @ManyToMany(cascade = cascadeType.ALL,mappedBy = "products")
+        public List <Category> categories;
         @Constraints.Required
         private String name;
         @ManyToOne
@@ -57,13 +59,7 @@ public class Product extends Model {
         public void setName(String name) {
             this.name = name;
         }
-        public Category getCategory() {
-            return category;
-        }
-        
-        public void setCategory(Category c) {
-            this.category = c;
-        }
+    
         public String getDescription() { 
             return description; 
         } 
