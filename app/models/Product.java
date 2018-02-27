@@ -13,7 +13,7 @@ public class Product extends Model {
         // Properties
         @Id
         public Long id;
-        @ManyToMany(cascade = cascadeType.ALL,mappedBy = "products")
+        @ManyToMany(cascade = CascadeType.ALL,mappedBy = "products")
         public List <Category> categories;
         @Constraints.Required
         private String name;
@@ -78,5 +78,12 @@ public class Product extends Model {
         public void setPrice(double price) { 
             this.price = price; 
         } 
+
+        public List<Long> catSelect = new ArrayList<Long>();
+
+
+        public List<Long> getCatSelect(){
+            return catSelect;
+        }
     }
     

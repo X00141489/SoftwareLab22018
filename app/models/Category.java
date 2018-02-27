@@ -67,4 +67,11 @@ public class Category extends Model {
         return options;
     }
 
+    public static boolean inCategory(Long category,Long product){
+        return find.query().where()
+        .eq("products.id",product)
+        .eq("id",category)
+        .findCount()>0;
+    }
+
 }

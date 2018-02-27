@@ -75,16 +75,17 @@ public class HomeController extends Controller {
         else {
             newProduct = newProductForm.get();
 
-            if (newProduct.getId() == null) {
-                newProduct.save();    
-                flash("success", "Product " + newProduct.getName() + " was added");
-                
-            }
-            else if (newProduct.getId() != null) {
-                newProduct.update();
-                flash("success", "Product " + newProduct.getName() + " was updated");
-            }
+           if(newProduct.getId()==null){
+               newProduct.save();
+        for(Long cat : newProduct.getCatSelect()){
+            newProduct.categories.add(Category.find.byId(cat));
         }
+        newProduct.update();
+               flash("success","Product"+newProduct.getName()+"was updated");
+           }
+        }
+            
+        
 
         MultipartFormData data = request().body().asMultipartFormData();
         FilePart<File> image = data.getFile("upload");
@@ -277,6 +278,12 @@ public class HomeController extends Controller {
                     // No errors found - extract the product detail from the form
                     Product p = updateProductForm.get();
                     p.setId(id);
+
+                    List<Category> newCats = new ArrayList<Category>();
+                    for(Long cat: p.getCatSelect()){
+                        newCats.add(Category.find.byId(cat));
+                    }
+                    p.categories = newCats;
                     
                     
                     //update (save) this product
